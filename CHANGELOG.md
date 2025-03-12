@@ -4,6 +4,12 @@ Všetky významné zmeny v projekte Binance Trading Bot sú dokumentované v tom
 
 ## [Unreleased]
 
+### Pridané
+- **2025-03-12 20:05:30** - Pridaná podpora pre automatické použitie existujúceho BTC zostatku v `trading-loop.js`
+- **2025-03-12 19:48:51** - Pridaný skript `market-price.js` pre získanie aktuálnej ceny kryptomeny
+- **2025-03-12 19:45:18** - Vylepšený skript `trading-loop.js` s kontrolou zostatku a presným výpočtom zisku
+- **2025-03-12 19:42:30** - Pridaný skript `market-buy.js` pre trhový nákup kryptomeny s presnou sumou v quote mene
+
 ## [1.0.0] - 2025-03-12
 
 ### Pridané
@@ -113,4 +119,4 @@ Všetky významné zmeny v projekte Binance Trading Bot sú dokumentované v tom
 
 ## Autor
 
-© 2025 BG Bruno, BG Studio One. Všetky práva vyhradené.
+ BG Bruno, BG Studio One. Všetky práva vyhradené.
