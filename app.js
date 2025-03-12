@@ -15,24 +15,32 @@ const fs = require('fs');
 // Define available commands and their associated scripts
 const commands = {
   'account-info': {
-    script: 'account_info.js',
+    script: 'account-info.js',
     description: 'Get account information and balances'
   },
   'exchange-info': {
-    script: 'exchange_info.js',
+    script: 'exchange-info.js',
     description: 'Get exchange information and trading pairs'
   },
   'order': {
     script: 'order.js',
     description: 'Get information about a specific order'
   },
-  'order_monitor': {
-    script: 'order_monitor.js',
+  'order-monitor': {
+    script: 'order-monitor.js',
     description: 'Monitor an order until it\'s filled'
   },
   'orders-download': {
     script: 'orders-download.js',
     description: 'Download orders and save to CSV or SQLite'
+  },
+  'order-trade': {
+    script: 'order-trade.js',
+    description: 'Create and manage trading orders'
+  },
+  'order-cancel': {
+    script: 'order-cancel.js',
+    description: 'Cancel an existing order'
   }
 };
 
@@ -54,7 +62,7 @@ function showHelp() {
   console.log('  node app.js account-info');
   console.log('  node app.js exchange-info');
   console.log('  node app.js order --symbol BTCUSDT --orderId 123456789');
-  console.log('  node app.js order_monitor --symbol BTCUSDT --orderId 123456789');
+  console.log('  node app.js order-cancel --symbol BTCUSDT --orderId 123456789');  console.log('  node app.js order-monitor --symbol BTCUSDT --orderId 123456789');
 }
 
 /**
