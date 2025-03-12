@@ -62,6 +62,7 @@ async function getListenKey() {
 /**
  * Keep the listen key alive by sending a ping
  * @param {string} listenKey - Listen key to keep alive
+ * @returns {Promise<boolean>} - True if successful, false otherwise
  */
 async function keepAliveListenKey(listenKey) {
   try {
@@ -74,8 +75,10 @@ async function keepAliveListenKey(listenKey) {
     });
     
     console.log('Listen key kept alive');
+    return true;
   } catch (error) {
     console.error('Error keeping listen key alive:', error.response ? error.response.data : error.message);
+    return false;
   }
 }
 
@@ -168,95 +171,160 @@ async function monitorOrderStatus(symbol, orderId, clientOrderId) {
     
     // Get a listen key for user data stream
     console.log('\nGetting listen key for WebSocket connection...');
-    const listenKey = await getListenKey();
+    let listenKey = await getListenKey();
     console.log(`Listen key obtained: ${listenKey.substring(0, 10)}...`);
     
-    // Setup keep-alive interval (every 30 minutes)
-    const keepAliveInterval = setInterval(() => {
-      keepAliveListenKey(listenKey).catch(err => {
-        console.error('Failed to keep listen key alive:', err.message);
-        clearInterval(keepAliveInterval);
-      });
-    }, 30 * 60 * 1000); // 30 minutes
+    // Setup keep-alive interval (every 10 minutes)
+    // Binance recommends refreshing the listen key every 30 minutes
+    // The key expires after 60 minutes if not refreshed
+    // Using a shorter interval (10 minutes) for better reliability
+    const keepAliveInterval = setInterval(async () => {
+      const success = await keepAliveListenKey(listenKey);
+      if (!success) {
+        console.log('Failed to keep listen key alive. Getting a new one...');
+        try {
+          // Try to get a new listen key
+          const newListenKey = await getListenKey();
+          console.log(`New listen key obtained: ${newListenKey.substring(0, 10)}...`);
+          
+          // Close existing WebSocket connection
+          if (ws && ws.readyState === WebSocket.OPEN) {
+            ws.close();
+          }
+          
+          // Update the listen key
+          listenKey = newListenKey;
+          
+          // Reconnect WebSocket with new listen key
+          ws = new WebSocket(`wss://stream.binance.com:9443/ws/${listenKey}`);
+          setupWebSocketHandlers(ws);
+        } catch (error) {
+          console.error('Failed to get a new listen key:', error.message);
+          clearInterval(keepAliveInterval);
+        }
+      }
+    }, 10 * 60 * 1000); // 10 minutes
     
-    // Connect to WebSocket
-    console.log('\nConnecting to Binance WebSocket...');
-    const ws = new WebSocket(`wss://stream.binance.com:9443/ws/${listenKey}`);
+    /**
+     * Setup WebSocket event handlers
+     * @param {WebSocket} webSocket - WebSocket instance
+     */
+    function setupWebSocketHandlers(webSocket) {
+      webSocket.on('open', () => {
+        console.log('WebSocket connection established');
+        console.log(`\nMonitoring order ${orderId || clientOrderId} for symbol ${symbol}...`);
+        console.log('Waiting for updates... (Press Ctrl+C to exit)');
+      });
+      
+      webSocket.on('message', (data) => {
+        const event = JSON.parse(data);
+        
+        // Check if this is an execution report for our order
+        if (event.e === 'executionReport' && 
+            (event.i === parseInt(orderId) || event.c === clientOrderId) && 
+            event.s === symbol) {
+          
+          const currentStatus = event.X; // Current execution type
+          const currentExecutedQty = parseFloat(event.z); // Cumulative filled quantity
+          
+          // Only log if there's a change in status or executed quantity
+          if (currentStatus !== lastStatus || currentExecutedQty !== lastExecutedQty) {
+            console.log(`\n[${new Date().toLocaleString()}] Order update:`);
+            console.log(`Status: ${currentStatus}`);
+            console.log(`Executed: ${currentExecutedQty}/${parseFloat(event.q)} (${(currentExecutedQty / parseFloat(event.q) * 100).toFixed(2)}%)`);
+            
+            if (currentExecutedQty > lastExecutedQty) {
+              console.log(`New fill: ${(currentExecutedQty - lastExecutedQty).toFixed(8)} at price ${event.L}`);
+            }
+            
+            lastStatus = currentStatus;
+            lastExecutedQty = currentExecutedQty;
+            
+            // If order is filled, close the connection
+            if (currentStatus === 'FILLED') {
+              console.log('\n🎉 Order has been completely filled! 🎉');
+              console.log(`Time: ${new Date(event.T).toLocaleString()}`);
+              
+              // Save order details to file if requested
+              if (parseArgs().save) {
+                const saveArg = parseArgs().save;
+                // Get the save path - either the path provided or default to './orders'
+                let savePath = './orders';
+                if (typeof saveArg === 'string') {
+                  savePath = saveArg;
+                }
+                
+                // Create directory if it doesn't exist
+                if (!fs.existsSync(savePath)) {
+                  fs.mkdirSync(savePath, { recursive: true });
+                  console.log(`Created directory: ${savePath}`);
+                }
+                
+                const filename = `${savePath}/${symbol}-${event.i}.json`;
+                fs.writeFileSync(filename, JSON.stringify(event, null, 2));
+                console.log(`\nOrder details saved to: ${filename}`);
+              }
+              
+              // Close WebSocket and clear interval
+              webSocket.close();
+              clearInterval(keepAliveInterval);
+            }
+          }
+        }
+      });
+      
+      webSocket.on('error', (error) => {
+        console.error('WebSocket error:', error.message);
+      });
+      
+      webSocket.on('close', () => {
+        console.log('WebSocket connection closed');
+      });
+    }
     
     // Track order updates
     let lastStatus = order.status;
     let lastExecutedQty = parseFloat(order.executedQty);
     
-    ws.on('open', () => {
-      console.log('WebSocket connection established');
-      console.log(`\nMonitoring order ${orderId || clientOrderId} for symbol ${symbol}...`);
-      console.log('Waiting for updates... (Press Ctrl+C to exit)');
-    });
+    // Connect to WebSocket
+    console.log('\nConnecting to Binance WebSocket...');
+    let ws = new WebSocket(`wss://stream.binance.com:9443/ws/${listenKey}`);
+    setupWebSocketHandlers(ws);
     
-    ws.on('message', (data) => {
-      const event = JSON.parse(data);
+    // Setup reconnection logic
+    let reconnectAttempts = 0;
+    const maxReconnectAttempts = 5;
+    
+    // Handle WebSocket disconnection
+    ws.on('close', async (code, reason) => {
+      console.log(`WebSocket disconnected with code ${code}${reason ? ': ' + reason : ''}`);
       
-      // Check if this is an execution report for our order
-      if (event.e === 'executionReport' && 
-          (event.i === parseInt(orderId) || event.c === clientOrderId) && 
-          event.s === symbol) {
-        
-        const currentStatus = event.X; // Current execution type
-        const currentExecutedQty = parseFloat(event.z); // Cumulative filled quantity
-        
-        // Only log if there's a change in status or executed quantity
-        if (currentStatus !== lastStatus || currentExecutedQty !== lastExecutedQty) {
-          console.log(`\n[${new Date().toLocaleString()}] Order update:`);
-          console.log(`Status: ${currentStatus}`);
-          console.log(`Executed: ${currentExecutedQty}/${parseFloat(event.q)} (${(currentExecutedQty / parseFloat(event.q) * 100).toFixed(2)}%)`);
-          
-          if (currentExecutedQty > lastExecutedQty) {
-            console.log(`New fill: ${(currentExecutedQty - lastExecutedQty).toFixed(8)} at price ${event.L}`);
-          }
-          
-          lastStatus = currentStatus;
-          lastExecutedQty = currentExecutedQty;
-          
-          // If order is filled, close the connection
-          if (currentStatus === 'FILLED') {
-            console.log('\n🎉 Order has been completely filled! 🎉');
-            console.log(`Time: ${new Date(event.T).toLocaleString()}`);
-            
-            // Save order details to file if requested
-            if (parseArgs().save) {
-              const saveArg = parseArgs().save;
-              // Get the save path - either the path provided or default to './orders'
-              let savePath = './orders';
-              if (typeof saveArg === 'string') {
-                savePath = saveArg;
-              }
-              
-              // Create directory if it doesn't exist
-              if (!fs.existsSync(savePath)) {
-                fs.mkdirSync(savePath, { recursive: true });
-                console.log(`Created directory: ${savePath}`);
-              }
-              
-              const filename = `${savePath}/${symbol}-${event.i}.json`;
-              fs.writeFileSync(filename, JSON.stringify(event, null, 2));
-              console.log(`\nOrder details saved to: ${filename}`);
-            }
-            
-            // Close WebSocket and clear interval
-            ws.close();
-            clearInterval(keepAliveInterval);
-          }
-        }
+      // Don't attempt to reconnect if we've reached max attempts or if the order is filled
+      if (reconnectAttempts >= maxReconnectAttempts || lastStatus === 'FILLED') {
+        console.log('Not attempting to reconnect due to max attempts reached or order is filled');
+        clearInterval(keepAliveInterval);
+        return;
       }
-    });
-    
-    ws.on('error', (error) => {
-      console.error('WebSocket error:', error.message);
-    });
-    
-    ws.on('close', () => {
-      console.log('WebSocket connection closed');
-      clearInterval(keepAliveInterval);
+      
+      reconnectAttempts++;
+      console.log(`Attempting to reconnect (${reconnectAttempts}/${maxReconnectAttempts})...`);
+      
+      try {
+        // Try to get a new listen key
+        listenKey = await getListenKey();
+        console.log(`New listen key obtained: ${listenKey.substring(0, 10)}...`);
+        
+        // Reconnect WebSocket with new listen key
+        ws = new WebSocket(`wss://stream.binance.com:9443/ws/${listenKey}`);
+        setupWebSocketHandlers(ws);
+        
+        // Reset reconnect attempts on successful connection
+        ws.on('open', () => {
+          reconnectAttempts = 0;
+        });
+      } catch (error) {
+        console.error('Failed to reconnect:', error.message);
+      }
     });
     
   } catch (error) {

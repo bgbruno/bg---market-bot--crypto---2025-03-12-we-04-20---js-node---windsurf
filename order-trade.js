@@ -9,7 +9,8 @@
  *   node order-trade.js --symbol BTCUSDT --side BUY --quantity 0.001 --price 50000
  *   node order-trade.js --symbol BTCUSDT --side SELL --quantity 0.001 --market
  *   node order-trade.js --symbol BTCUSDT --side BUY --quoteOrderQty 50 --market
- *   node order-trade.js --symbol BTCUSDT --side SELL --quantity 0.001 --takeProfit 5
+ *   node order-trade.js --symbol BTCUSDT --side SELL --quantity 0.001 --takeProfitPercentage 5
+ *   node order-trade.js --symbol BTCUSDT --side SELL --quantity 0.001 --takeProfitExplicit 50 --takeProfitSymbol USDT
  */
 
 const crypto = require('crypto');
@@ -188,6 +189,49 @@ async function createTakeProfitOrder(symbol, quantity, buyPrice, profitPercentag
   return await createOrder(orderParams);
 }
 
+/**
+ * Create a take profit order with an explicit profit amount
+ * @param {string} symbol - Trading pair symbol
+ * @param {number} quantity - Amount to sell
+ * @param {number} buyPrice - Original buy price (for reference)
+ * @param {number} profitAmount - Explicit profit amount in quote currency
+ * @param {string} profitSymbol - Symbol of the profit currency (default: USDT)
+ * @returns {Promise<Object>} - Order information
+ */
+async function createTakeProfitExplicitOrder(symbol, quantity, buyPrice, profitAmount, profitSymbol = 'USDT') {
+  // Define trading fees (standard Binance fees, can be adjusted based on user's VIP level)
+  const buyFee = 0.001; // 0.1% for buy
+  const sellFee = 0.001; // 0.1% for sell
+  
+  // Calculate buy fee amount
+  const buyFeeAmount = buyPrice * quantity * buyFee;
+  
+  // Calculate the target price that will yield the desired net profit after fees
+  // Formula: targetPrice = (buyPrice * quantity + profitAmount + buyFeeAmount) / (quantity * (1 - sellFee))
+  const targetPrice = (buyPrice * quantity + profitAmount + buyFeeAmount) / (quantity * (1 - sellFee));
+  
+  const profitPercentage = ((targetPrice / buyPrice) - 1) * 100;
+  
+  console.log(`Creating take profit order for ${symbol}`);
+  console.log(`Buy price: ${buyPrice}`);
+  console.log(`Profit amount: ${profitAmount} ${profitSymbol} (net after fees)`);
+  console.log(`Buy fee: ${buyFeeAmount.toFixed(8)} ${profitSymbol}`);
+  console.log(`Sell fee (estimated): ${(targetPrice * quantity * sellFee).toFixed(8)} ${profitSymbol}`);
+  console.log(`Target price: ${targetPrice} (${profitPercentage.toFixed(2)}% profit)`);
+  
+  // Create a LIMIT sell order at the target price
+  const orderParams = {
+    symbol: symbol,
+    side: 'SELL',
+    type: 'LIMIT',
+    quantity: quantity,
+    price: targetPrice.toFixed(2), // Adjust precision as needed
+    timeInForce: 'GTC'
+  };
+  
+  return await createOrder(orderParams);
+}
+
 // Main function
 async function main() {
   try {
@@ -201,7 +245,8 @@ async function main() {
       console.log('  node order-trade.js --symbol BTCUSDT --side BUY --quantity 0.001 --price 50000');
       console.log('  node order-trade.js --symbol BTCUSDT --side SELL --quantity 0.001 --market');
       console.log('  node order-trade.js --symbol BTCUSDT --side BUY --quoteOrderQty 50 --market');
-      console.log('  node order-trade.js --symbol BTCUSDT --side SELL --quantity 0.001 --takeProfit 5\n');
+      console.log('  node order-trade.js --symbol BTCUSDT --side SELL --quantity 0.001 --takeProfitPercentage 5');
+      console.log('  node order-trade.js --symbol BTCUSDT --side SELL --quantity 0.001 --takeProfitExplicit 50 --takeProfitSymbol USDT\n');
       console.log('Parameters:');
       console.log('  --symbol          Trading pair symbol (required)');
       console.log('  --side            Order side: BUY or SELL (required)');
@@ -210,7 +255,9 @@ async function main() {
       console.log('  --price           Price for LIMIT orders');
       console.log('  --market          Create a MARKET order (default is LIMIT if price is provided)');
       console.log('  --stopPrice       Stop price for STOP_LOSS orders');
-      console.log('  --takeProfit      Percentage profit target (e.g., 5 for 5% profit)');
+      console.log('  --takeProfitPercentage      Percentage profit target (e.g., 5 for 5% profit)');
+      console.log('  --takeProfitExplicit        Explicit profit amount in quote currency (e.g., 50 for 50 USDT profit)');
+      console.log('  --takeProfitSymbol         Symbol of the profit currency (default: USDT)');
       console.log('\nAlternatively, you can use the app.js interface:');
       console.log('  node app.js order-trade --symbol BTCUSDT --side BUY --quantity 0.001 --price 50000');
       return;
@@ -242,7 +289,12 @@ async function main() {
     }
     
     // Handle take profit orders
-    if (args.takeProfit && args.side === 'SELL') {
+    if ((args.takeProfitPercentage || args.takeProfitExplicit) && args.side === 'SELL') {
+      if (args.takeProfitPercentage && args.takeProfitExplicit) {
+        console.error('Please specify either --takeProfitPercentage OR --takeProfitExplicit, not both.');
+        process.exit(1);
+      }
+      
       if (!args.buyPrice && !args.buyOrderId) {
         // If no buy price is provided, get the current price as reference
         console.log('No buy price provided, getting current price as reference...');
@@ -250,27 +302,50 @@ async function main() {
         args.buyPrice = currentPrice;
       }
       
-      const profitPercentage = parseFloat(args.takeProfit);
+      let order;
       
-      if (isNaN(profitPercentage) || profitPercentage <= 0) {
-        console.error('Take profit percentage must be a positive number.');
-        process.exit(1);
+      if (args.takeProfitPercentage) {
+        const profitPercentage = parseFloat(args.takeProfitPercentage);
+        
+        if (isNaN(profitPercentage) || profitPercentage <= 0) {
+          console.error('Take profit percentage must be a positive number.');
+          process.exit(1);
+        }
+        
+        // Create take profit order based on percentage
+        order = await createTakeProfitOrder(
+          args.symbol,
+          args.quantity,
+          parseFloat(args.buyPrice),
+          profitPercentage
+        );
+      } else {
+        const profitAmount = parseFloat(args.takeProfitExplicit);
+        
+        if (isNaN(profitAmount) || profitAmount <= 0) {
+          console.error('Take profit explicit amount must be a positive number.');
+          process.exit(1);
+        }
+        
+        // Get profit symbol if provided, otherwise default to USDT
+        const profitSymbol = args.takeProfitSymbol || 'USDT';
+        
+        // Create take profit order with explicit profit amount
+        order = await createTakeProfitExplicitOrder(
+          args.symbol,
+          args.quantity,
+          parseFloat(args.buyPrice),
+          profitAmount,
+          profitSymbol
+        );
       }
-      
-      // Create take profit order
-      const order = await createTakeProfitOrder(
-        args.symbol,
-        args.quantity,
-        parseFloat(args.buyPrice),
-        profitPercentage
-      );
       
       // Display order information
       displayOrder(order);
       
       // Suggest monitoring the order
       console.log('\nTo monitor this order, use:');
-      console.log(`node order_monitor.js --symbol ${args.symbol} --orderId ${order.orderId} --save`);
+      console.log(`node order-monitor.js --symbol ${args.symbol} --orderId ${order.orderId} --save`);
       
       return;
     }
