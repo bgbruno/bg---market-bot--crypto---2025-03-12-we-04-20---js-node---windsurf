@@ -22,7 +22,7 @@ const DEFAULT_PARAMS = {
   startTime: null,  // Optional: start time in milliseconds
   endTime: null,    // Optional: end time in milliseconds
   limit: 500,       // Default: 500 (max allowed by Binance)
-  format: 'csv',    // Default output format: 'csv' or 'sqlite'
+  format: 'csv',    // Default output format: 'csv', 'sqlite', or 'json'
   output: './orders' // Default output path
 };
 
@@ -59,8 +59,8 @@ function parseArgs() {
       }
     } else if (arg === '--format' || arg === '-o') {
       const format = args[++i].toLowerCase();
-      if (format !== 'csv' && format !== 'sqlite') {
-        console.error(`Invalid format: ${format}. Must be 'csv' or 'sqlite'`);
+      if (format !== 'csv' && format !== 'sqlite' && format !== 'json') {
+        console.error(`Invalid format: ${format}. Must be 'csv', 'sqlite', or 'json'`);
         process.exit(1);
       }
       params.format = format;
@@ -83,12 +83,13 @@ Options:
   -f, --start DATE          Start date (e.g., "2023-01-01")
   -t, --end DATE            End date (e.g., "2023-12-31")
   -l, --limit NUMBER        Number of orders to fetch (default: 500, max: 1000)
-  -o, --format FORMAT       Output format: 'csv' or 'sqlite' (default: csv)
+  -o, --format FORMAT       Output format: 'csv', 'sqlite', or 'json' (default: csv)
   -p, --output PATH         Output path (default: ./orders)
 
 Examples:
   node orders-download.js --symbol BTCUSDT --format csv
   node orders-download.js --symbol ETHUSDT --start "2023-01-01" --end "2023-12-31" --format sqlite
+  node orders-download.js --symbol BTCUSDT --format json --output ./data
   `);
 }
 
@@ -151,10 +152,13 @@ async function saveToCSV(orders, outputPath, symbol) {
     fs.mkdirSync(dir, { recursive: true });
   }
   
-  // Define CSV file path
+  // Define CSV file path with date and time
+  const now = new Date();
+  const dateTimeStr = now.toISOString().replace(/:/g, '-').replace('T', '_').split('.')[0];
+  
   const fileName = symbol ? 
-    `${outputPath}_${symbol}_${new Date().toISOString().split('T')[0]}.csv` : 
-    `${outputPath}_all_${new Date().toISOString().split('T')[0]}.csv`;
+    `${outputPath}_${symbol}_${dateTimeStr}.csv` : 
+    `${outputPath}_all_${dateTimeStr}.csv`;
   
   // Define CSV header
   const csvWriter = createObjectCsvWriter({
@@ -209,10 +213,13 @@ async function saveToSQLite(orders, outputPath, symbol) {
     fs.mkdirSync(dir, { recursive: true });
   }
   
-  // Define SQLite database file path
+  // Define SQLite database file path with date and time
+  const now = new Date();
+  const dateTimeStr = now.toISOString().replace(/:/g, '-').replace('T', '_').split('.')[0];
+  
   const dbFileName = symbol ? 
-    `${outputPath}_${symbol}_${new Date().toISOString().split('T')[0]}.db` : 
-    `${outputPath}_all_${new Date().toISOString().split('T')[0]}.db`;
+    `${outputPath}_${symbol}_${dateTimeStr}.db` : 
+    `${outputPath}_all_${dateTimeStr}.db`;
   
   // Create and connect to SQLite database
   const db = new sqlite3.Database(dbFileName);
@@ -318,6 +325,42 @@ async function saveToSQLite(orders, outputPath, symbol) {
   }
 }
 
+// Save orders to JSON file
+async function saveToJSON(orders, outputPath, symbol) {
+  if (!orders || orders.length === 0) {
+    console.log('No orders to save.');
+    return;
+  }
+  
+  // Create output directory if it doesn't exist
+  const dir = path.dirname(outputPath);
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+  }
+  
+  // Define JSON file path with date and time
+  const now = new Date();
+  const dateTimeStr = now.toISOString().replace(/:/g, '-').replace('T', '_').split('.')[0];
+  
+  const fileName = symbol ? 
+    `${outputPath}_${symbol}_${dateTimeStr}.json` : 
+    `${outputPath}_all_${dateTimeStr}.json`;
+  
+  // Format dates in orders
+  const formattedOrders = orders.map(order => {
+    return {
+      ...order,
+      time_iso: new Date(order.time).toISOString(),
+      updateTime_iso: new Date(order.updateTime).toISOString()
+    };
+  });
+  
+  // Write to JSON file
+  fs.writeFileSync(fileName, JSON.stringify(formattedOrders, null, 2));
+  console.log(`JSON file saved to: ${fileName}`);
+  console.log(`Total orders saved: ${orders.length}`);
+}
+
 // Main function
 async function main() {
   // Parse command line arguments
@@ -335,6 +378,8 @@ async function main() {
     await saveToCSV(orders, params.output, params.symbol);
   } else if (params.format === 'sqlite') {
     await saveToSQLite(orders, params.output, params.symbol);
+  } else if (params.format === 'json') {
+    await saveToJSON(orders, params.output, params.symbol);
   }
 }
 
