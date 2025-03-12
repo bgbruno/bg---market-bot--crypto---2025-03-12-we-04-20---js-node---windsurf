@@ -7,8 +7,8 @@
  * and notifies when the order is filled.
  * 
  * Usage:
- *   node order_monitor.js --orderId 123456789 --symbol BTCUSDT
- *   node order_monitor.js --clientOrderId myOrder123 --symbol BTCUSDT
+ *   node order-monitor.js --orderId 123456789 --symbol BTCUSDT
+ *   node order-monitor.js --clientOrderId myOrder123 --symbol BTCUSDT
  */
 
 const crypto = require('crypto');
@@ -224,9 +224,22 @@ async function monitorOrderStatus(symbol, orderId, clientOrderId) {
             
             // Save order details to file if requested
             if (parseArgs().save) {
-              const filename = `order_filled_${symbol}_${event.i}_${new Date().toISOString().replace(/:/g, '-')}.json`;
+              const saveArg = parseArgs().save;
+              // Get the save path - either the path provided or default to './orders'
+              let savePath = './orders';
+              if (typeof saveArg === 'string') {
+                savePath = saveArg;
+              }
+              
+              // Create directory if it doesn't exist
+              if (!fs.existsSync(savePath)) {
+                fs.mkdirSync(savePath, { recursive: true });
+                console.log(`Created directory: ${savePath}`);
+              }
+              
+              const filename = `${savePath}/${symbol}-${event.i}.json`;
               fs.writeFileSync(filename, JSON.stringify(event, null, 2));
-              console.log(`\nOrder details saved to ${filename}`);
+              console.log(`\nOrder details saved to: ${filename}`);
             }
             
             // Close WebSocket and clear interval
@@ -261,15 +274,15 @@ async function main() {
       console.log('\nBinance Order Monitor\n');
       console.log('Description: Monitor an order until it\'s filled\n');
       console.log('Usage:');
-      console.log('  node order_monitor.js --symbol BTCUSDT --orderId 123456789');
-      console.log('  node order_monitor.js --symbol ETHUSDT --clientOrderId myOrder123 --save\n');
+      console.log('  node order-monitor.js --symbol BTCUSDT --orderId 123456789');
+      console.log('  node order-monitor.js --symbol ETHUSDT --clientOrderId myOrder123 --save\n');
       console.log('Parameters:');
       console.log('  --symbol          Trading pair symbol (required)');
       console.log('  --orderId         Order ID to monitor (required if clientOrderId not provided)');
       console.log('  --clientOrderId   Client order ID to monitor (required if orderId not provided)');
-      console.log('  --save            Save order details to file when filled');
+      console.log('  --save            Save order details to file when filled. Can specify path: --save "./data/orders"');
       console.log('\nAlternatively, you can use the app.js interface:');
-      console.log('  node app.js order_monitor --symbol BTCUSDT --orderId 123456789');
+      console.log('  node app.js order-monitor --symbol BTCUSDT --orderId 123456789');
       return;
     }
     
@@ -281,14 +294,14 @@ async function main() {
     
     if (!args.symbol) {
       console.error('Symbol is required. Use --symbol BTCUSDT');
-      console.log('Example: node order_monitor.js --symbol BTCUSDT --orderId 123456789');
+      console.log('Example: node order-monitor.js --symbol BTCUSDT --orderId 123456789');
       process.exit(1);
     }
     
     if (!args.orderId && !args.clientOrderId) {
       console.error('Either orderId or clientOrderId is required.');
-      console.log('Example: node order_monitor.js --symbol BTCUSDT --orderId 123456789');
-      console.log('Example: node order_monitor.js --symbol BTCUSDT --clientOrderId myOrder123');
+      console.log('Example: node order-monitor.js --symbol BTCUSDT --orderId 123456789');
+      console.log('Example: node order-monitor.js --symbol BTCUSDT --clientOrderId myOrder123');
       process.exit(1);
     }
     

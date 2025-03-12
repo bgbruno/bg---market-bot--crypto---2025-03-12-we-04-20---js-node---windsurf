@@ -34,8 +34,8 @@ if (require.main === module) {
         console.log('\nBinance Exchange Information\n');
         console.log('Description: Get exchange information and trading pairs\n');
         console.log('Usage:');
-        console.log('  node exchange_info.js');
-        console.log('  node exchange_info.js --symbols BTCUSDT,ETHUSDT\n');
+        console.log('  node exchange-info.js');
+        console.log('  node exchange-info.js --symbols BTCUSDT,ETHUSDT\n');
         console.log('Parameters:');
         console.log('  --symbols         Comma-separated list of symbols to filter (optional)');
         console.log('\nAlternatively, you can use the app.js interface:');
