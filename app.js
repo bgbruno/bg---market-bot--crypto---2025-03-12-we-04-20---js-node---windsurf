@@ -29,6 +29,10 @@ const commands = {
   'order_monitor': {
     script: 'order_monitor.js',
     description: 'Monitor an order until it\'s filled'
+  },
+  'orders-download': {
+    script: 'orders-download.js',
+    description: 'Download orders and save to CSV or SQLite'
   }
 };
 
