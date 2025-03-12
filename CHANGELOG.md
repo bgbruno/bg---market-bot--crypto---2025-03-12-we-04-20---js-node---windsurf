@@ -5,6 +5,9 @@ Všetky významné zmeny v projekte Binance Trading Bot sú dokumentované v tom
 ## [Unreleased]
 
 ### Pridané
+- **2025-03-12 23:55:00** - Obnovené volanie `order-prediction.js` v skripte `trading-loop.js` pre zobrazenie predikcie naplnenia objednávky
+- **2025-03-12 23:53:00** - Pridaný nový skript `orders-open.js` pre zobrazenie všetkých aktuálne otvorených objednávok na Binance
+- **2025-03-12 23:49:00** - Vylepšený výpočet predajnej ceny v `trading-loop.js` pre garantovanie presného zisku v USDT
 - **2025-03-12 20:55:00** - Vylepšený `trading-loop.js` s časovou značkou v názvoch súborov so štatistikami pre lepšiu identifikáciu pri viacerých inštanciách
 - **2025-03-12 20:50:00** - Pridaná podpora pre ukladanie hodnoty "profit" do súborov s históriou obchodov
 - **2025-03-12 20:36:00** - Opravená chyba v `trading-loop.js` pri monitorovaní objednávky - pridaný parameter `--symbol`

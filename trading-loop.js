@@ -122,20 +122,34 @@ function extractBuyPrice(output) {
 }
 
 // Calculate profit target price based on buy price and profit settings
-function calculateProfitPrice(buyPrice, profitSettings) {
+function calculateProfitPrice(buyPrice, profitSettings, quantity = null) {
   const price = parseFloat(buyPrice);
   
   if (profitSettings.type === 'fixed') {
     // Fixed profit amount in quote currency
-    return (price + parseFloat(profitSettings.value)).toFixed(2);
+    if (quantity) {
+      // Calculate the price increase needed to achieve the target profit based on quantity
+      const profitValue = parseFloat(profitSettings.value);
+      const priceIncrease = profitValue / parseFloat(quantity);
+      return (price + priceIncrease).toFixed(2);
+    } else {
+      // Fallback to simple addition if quantity is not provided
+      return (price + parseFloat(profitSettings.value)).toFixed(2);
+    }
   } else if (profitSettings.type === 'percent') {
     // Percentage profit
     const profitPercent = parseFloat(profitSettings.value) / 100;
     return (price * (1 + profitPercent)).toFixed(2);
   }
   
-  // Default to fixed profit
-  return (price + parseFloat(profitSettings.value)).toFixed(2);
+  // Default to fixed profit with quantity adjustment if available
+  if (quantity) {
+    const profitValue = parseFloat(profitSettings.value);
+    const priceIncrease = profitValue / parseFloat(quantity);
+    return (price + priceIncrease).toFixed(2);
+  } else {
+    return (price + parseFloat(profitSettings.value)).toFixed(2);
+  }
 }
 
 // Calculate stop loss price based on buy price and stop loss settings
@@ -567,8 +581,8 @@ async function tradingLoop() {
         tradeData.quantity = buyQuantity;
       }
       
-      // Step 2: Calculate sell price based on profit settings
-      const sellPrice = calculateProfitPrice(buyPrice, profitSettings);
+      // Step 2: Calculate sell price based on profit settings and quantity
+      const sellPrice = calculateProfitPrice(buyPrice, profitSettings, buyQuantity);
       
       // Calculate stop loss price if enabled
       const stopLossPrice = calculateStopLossPrice(buyPrice, stopLossSettings);
@@ -581,16 +595,32 @@ async function tradingLoop() {
         if (stopLossSettings.enabled) {
           console.log(`Stop Loss Price: ${stopLossPrice} ${quoteCurrency}`);
         }
+        
+        // Show order prediction
+        console.log('\nOrder Prediction:');
+        const predictionArgs = [
+          'order-prediction.js',
+          '--symbol', symbol,
+          '--price', sellPrice,
+          '--side', 'SELL',
+          '--quantity', roundedQuantity.toFixed(5)
+        ];
+        
+        await executeCommand('node', predictionArgs);
       } else {
         console.log(`Buy: ${buyPrice} → Sell: ${sellPrice} ${stopLossSettings.enabled ? `(Stop: ${stopLossPrice})` : ''}`);
       }
       
       // Step 3: Create limit sell order
+      // Round quantity down to 5 decimal places to comply with Binance LOT_SIZE filter
+      // and ensure we don't exceed available balance
+      const roundedQuantity = Math.floor(parseFloat(buyQuantity) * 100000) / 100000;
+      
       const sellArgs = [
         'order-trade.js',
         '--symbol', symbol,
         '--side', 'SELL',
-        '--quantity', buyQuantity,
+        '--quantity', roundedQuantity.toFixed(5),
         '--price', sellPrice
       ];
       

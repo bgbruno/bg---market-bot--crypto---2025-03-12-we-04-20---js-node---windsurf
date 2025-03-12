@@ -16,6 +16,7 @@ Komplexný nástroj na príkazovom riadku pre obchodovanie a správu objednávok
   - [order-cancel](#order-cancel)
   - [market-buy](#market-buy)
   - [market-price](#market-price)
+  - [orders-open](#orders-open)
   - [trading-loop](#trading-loop)
 - [Bezpečnostné poznámky](#bezpečnostné-poznámky)
 - [Licencia](#licencia)
@@ -330,6 +331,38 @@ node app.js market-price --symbol BTCUSDT
 ```
 Current price for BTCUSDT:
 Current price: 82788.93000000
+```
+
+### orders-open
+
+Zobrazí všetky aktuálne otvorené objednávky na Binance.
+
+**Použitie:**
+```
+node orders-open.js
+node orders-open.js --symbol BTCUSDT
+```
+
+**Parametre:**
+- `--symbol` - Symbol obchodného páru (voliteľné)
+- `--help` - Zobrazí nápovedu
+
+**Príklad výstupu:**
+```
+Fetching open orders for BTCUSDT...
+
+Found 1 open order:
+--------------------------------------------------
+Symbol:       BTCUSDT
+Order ID:     39281216690
+Client ID:    web_1234567890
+Type:         LIMIT
+Side:         SELL
+Price:        83830.51
+Quantity:     0.00059000
+Executed:     0.00000000 (0.00%)
+Status:       NEW
+Time:         12.3.2025, 23:45:12
 ```
 
 ### trading-loop
