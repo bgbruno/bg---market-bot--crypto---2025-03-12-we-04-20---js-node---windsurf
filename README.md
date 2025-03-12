@@ -338,73 +338,79 @@ Automatizovaný obchodný cyklus, ktorý nakupuje a predáva kryptomenu s cieľo
 
 **Použitie:**
 ```
-node app.js trading-loop --buyAmount 10 --profit 0.001 --cycles 3
-node app.js trading-loop --buyAmount 8 --profit 0.002 --cycles 1 --skipBalanceCheck
+node trading-loop.js --symbol BTCUSDT --buyAmount 10 --profit 0.01 --cycles 3
+node trading-loop.js --symbol ETHUSDT --buyAmount 10 --profitPercent 0.5 --stopLoss 5 --cycles 1 --dryRun
+node trading-loop.js --config config.json
+node trading-loop.js --symbol BTCUSDT --buyAmount 10 --profit 0.01 --saveConfig config.json
 ```
 
 **Parametre:**
-- `--buyAmount` - Suma v USDT na nákup (predvolené: 10)
-- `--profit` - Cieľový zisk v USDT (predvolené: 0.001)
-- `--cycles` - Počet obchodných cyklov (predvolené: 1)
-- `--delay` - Oneskorenie medzi cyklami v sekundách (predvolené: 5)
-- `--skipBalanceCheck` - Preskočiť kontrolu zostatku (voliteľné)
-- `--forceBuy` - Vynútiť nákup BTC aj keď je dostatok BTC na predaj (voliteľné)
+- `--symbol` - Obchodný pár (predvolene BTCUSDT)
+- `--buyAmount` - Suma na nákup v quote mene (predvolene 10)
+- `--profit` - Cieľový zisk v quote mene (predvolene 0.001)
+- `--profitPercent` - Alternatívne môžete zadať zisk ako percentuálnu hodnotu
+- `--stopLoss` - Voliteľná stop-loss hodnota v quote mene
+- `--stopLossPercent` - Alternatívne môžete zadať stop-loss ako percentuálnu hodnotu
+- `--trailingStop` - Aktivuje trailing stop-loss (predvolene false)
+- `--trailingPercent` - Vzdialenosť trailing stopu ako percento (predvolene 0.5%)
+- `--cycles` - Počet obchodných cyklov (predvolene nekonečno)
+- `--delay` - Oneskorenie medzi cyklami v sekundách (predvolene 5)
+- `--skipBalanceCheck` - Preskočí kontrolu zostatku pred obchodovaním (predvolene false)
+- `--dryRun` - Simuluje obchodovanie bez zadávania skutočných príkazov (predvolene false)
+- `--logLevel` - Úroveň logovania: minimal, normal, verbose (predvolene normal)
+- `--config` - Cesta k JSON konfiguračnému súboru
+- `--saveConfig` - Uloží aktuálne parametre do konfiguračného súboru
 
 **Funkcionality:**
-- Kontrola zostatku USDT a BTC pred obchodovaním
-- Automatické použitie existujúceho BTC zostatku, ak nie je dostatok USDT
+- Kontrola zostatku účtu pred obchodovaním
+- Automatické použitie existujúceho zostatku kryptomeny, ak je dostupný
 - Presný výpočet cieľovej ceny predaja pre požadovaný zisk
+- Podpora pre stop-loss a trailing stop-loss pre riadenie rizika
 - Monitorovanie predajnej objednávky až do jej vyplnenia
-- Detailné záznamy o každom obchodnom cykle
+- Detailné záznamy o každom obchodnom cykle v adresári `history`
+- Ukladanie kumulatívnych obchodných štatistík s časovou značkou
+- Možnosť simulácie obchodovania v režime "dry run"
+- Flexibilné nastavenie úrovne logovania
 
 **Príklad výstupu:**
 ```
 === Trading Loop Started ===
 Symbol: BTCUSDT
 Buy Amount: 10 USDT
-Profit Target: 0.001 USDT
+Profit Target: 0.01 USDT
 Max Cycles: 1
-Delay Between Cycles: 5 seconds
+Delay Between Cycles: 1 seconds
 Skip Balance Check: false
+Dry Run: false
+Log Level: normal
 ============================
 
 Checking account balance...
-Available USDT balance: 0.69460247
-Insufficient USDT balance. Required: 10, Available: 0.69460247
-Will try to use existing BTC balance instead.
-Available BTC balance: 0.00072959
+Available USDT balance: 15.59824826
+Available BTC balance: 0.00014935
 
-================================================================================
-=== CYCLE 1 === STARTED AT: 19:48:51 ===
-================================================================================
+==================================================
+TRADING CYCLE #1 - 2025-03-12T19:36:24.406Z
+==================================================
 
-Skipping buy step - using existing BTC balance: 0.00072959
-Current price: 82788.93000000
+Step 1: Buying using market order
+Bought 0.00012 BTC at average price of 82822.75000000 USDT
 
-Step 2: Creating sell order with profit target...
-Creating take profit order for BTCUSDT
-Buy price: 82788.93
-Profit amount: 0.001 USDT (net after fees)
-Target price: 82964.68000000 (0.21% profit)
+Step 2: Creating sell order
+Buy Price: 82822.75000000 USDT
+Sell Price: 82822.76 USDT
 
-Step 3: Showing order prediction...
-Order Prediction:
---------------------------------------------------
-Symbol:       BTCUSDT
-Order ID:     39281255489
-Type:         LIMIT
-Side:         SELL
-Price:        82964.68000000
-Current Price: 82794.67
-Price Diff:   0.21%
-Status:       NEW
+Sell order created with ID: 39283476276
 
-Expected Profit:
-Gross Profit: 0.0170 USDT
-Net Profit:   0.0004 USDT
-Percentage:   0.01%
+Step 4: Monitoring sell order
+Sell order has been filled!
 
-Step 4: Monitoring order until filled...
+Trade history saved to: history/trade_2025-03-12T19-36-31.323Z.json
+Trading statistics updated: 1 trades, 0.00000120 net profit
+
+=== Trading Loop Completed ===
+Completed 1 trading cycles
+=============================
 ```
 
 ## Bezpečnostné poznámky

@@ -5,6 +5,10 @@ Všetky významné zmeny v projekte Binance Trading Bot sú dokumentované v tom
 ## [Unreleased]
 
 ### Pridané
+- **2025-03-12 20:55:00** - Vylepšený `trading-loop.js` s časovou značkou v názvoch súborov so štatistikami pre lepšiu identifikáciu pri viacerých inštanciách
+- **2025-03-12 20:50:00** - Pridaná podpora pre ukladanie hodnoty "profit" do súborov s históriou obchodov
+- **2025-03-12 20:36:00** - Opravená chyba v `trading-loop.js` pri monitorovaní objednávky - pridaný parameter `--symbol`
+- **2025-03-12 20:33:00** - Opravená chyba v `trading-loop.js` s nedefinovanou premennou `baseCurrency`
 - **2025-03-12 20:05:30** - Pridaná podpora pre automatické použitie existujúceho BTC zostatku v `trading-loop.js`
 - **2025-03-12 19:48:51** - Pridaný skript `market-price.js` pre získanie aktuálnej ceny kryptomeny
 - **2025-03-12 19:45:18** - Vylepšený skript `trading-loop.js` s kontrolou zostatku a presným výpočtom zisku
