@@ -63,7 +63,13 @@ jspm_packages/
 .pnp.*
 
 # Custom ignores for this project
-config.js
-*.json
-!package.json
-!package-lock.json
+# config.js
+# *.json
+# !package.json
+# !package-lock.json
+
+# SQLite temporary files
+*.sqlite-shm
+*.sqlite-wal
+*.db-shm
+*.db-wal
