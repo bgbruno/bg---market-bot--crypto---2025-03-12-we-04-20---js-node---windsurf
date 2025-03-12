@@ -218,8 +218,8 @@ async function saveToSQLite(orders, outputPath, symbol) {
   const dateTimeStr = now.toISOString().replace(/:/g, '-').replace('T', '_').split('.')[0];
   
   const dbFileName = symbol ? 
-    `${outputPath}_${symbol}_${dateTimeStr}.db` : 
-    `${outputPath}_all_${dateTimeStr}.db`;
+    `${outputPath}_${symbol}_${dateTimeStr}.sqlite` : 
+    `${outputPath}_all_${dateTimeStr}.sqlite`;
   
   // Create and connect to SQLite database
   const db = new sqlite3.Database(dbFileName);
