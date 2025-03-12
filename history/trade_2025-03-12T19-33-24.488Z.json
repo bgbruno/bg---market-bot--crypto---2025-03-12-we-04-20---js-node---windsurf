@@ -1,0 +1,13 @@
+{
+  "cycle": 1,
+  "symbol": "BTCUSDT",
+  "buyAmount": "10",
+  "quantity": "0.00010",
+  "profit": "0.001",
+  "orderId": "39283055487",
+  "startTime": "2025-03-12T19:26:37.034Z",
+  "startTimeFormatted": "20:26:37",
+  "endTime": "2025-03-12T19:33:24.488Z",
+  "endTimeFormatted": "20:33:24",
+  "duration": "407.45 seconds"
+}

@@ -1,0 +1,37 @@
+{
+  "totalTrades": 3,
+  "successfulTrades": 3,
+  "failedTrades": 0,
+  "totalProfit": 0.0000035999999998603017,
+  "totalLoss": 0,
+  "netProfit": 0.0000035999999998603017,
+  "winRate": 100,
+  "startDate": "2025-03-12T19:36:31.324Z",
+  "lastTradeDate": "2025-03-12T19:50:39.664Z",
+  "trades": [
+    {
+      "date": "2025-03-12T19:50:39.664Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "82751.67000000",
+      "sellPrice": "82751.68",
+      "quantity": "0.00012",
+      "profit": "0.00000120"
+    },
+    {
+      "date": "2025-03-12T19:48:04.510Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "82700.06000000",
+      "sellPrice": "82700.07",
+      "quantity": "0.00012",
+      "profit": "0.00000120"
+    },
+    {
+      "date": "2025-03-12T19:36:31.324Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "82822.75000000",
+      "sellPrice": "82822.76",
+      "quantity": "0.00012",
+      "profit": "0.00000120"
+    }
+  ]
+}
