@@ -49,10 +49,30 @@ async function getAccountInfo() {
 }
 
 /**
- * Display account balances in a formatted table
+ * Get current prices for all trading pairs
+ * @returns {Promise<Object>} - Object with symbol as key and price as value
+ */
+async function getAllPrices() {
+  try {
+    const response = await axios.get(`${config.baseUrl}/api/v3/ticker/price`);
+    const prices = {};
+    
+    response.data.forEach(item => {
+      prices[item.symbol] = parseFloat(item.price);
+    });
+    
+    return prices;
+  } catch (error) {
+    console.error('Error fetching prices:', error.response ? error.response.data : error.message);
+    throw error;
+  }
+}
+
+/**
+ * Display account balances in a formatted table and calculate total in EUR
  * @param {Object} account - Account information
  */
-function displayBalances(account) {
+async function displayBalances(account) {
   const balances = account.balances.filter(b => parseFloat(b.free) > 0 || parseFloat(b.locked) > 0);
   
   console.log(`\nAccount Balances:`);
@@ -65,6 +85,76 @@ function displayBalances(account) {
       `${parseFloat(balance.free).toFixed(8).padEnd(15)} | ` +
       `${parseFloat(balance.locked).toFixed(8).padEnd(15)}`
     );
+  }
+  
+  // Calculate total value in EUR
+  try {
+    const prices = await getAllPrices();
+    let totalEUR = 0;
+    
+    for (const balance of balances) {
+      const asset = balance.asset;
+      const totalBalance = parseFloat(balance.free) + parseFloat(balance.locked);
+      
+      if (totalBalance <= 0) continue;
+      
+      // If the asset is EUR, add directly
+      if (asset === 'EUR') {
+        totalEUR += totalBalance;
+        continue;
+      }
+      
+      // Try to find direct pair with EUR
+      const directEURPair = `${asset}EUR`;
+      if (prices[directEURPair]) {
+        totalEUR += totalBalance * prices[directEURPair];
+        continue;
+      }
+      
+      // Try to convert via USDT
+      const usdtPair = `${asset}USDT`;
+      const eurUsdtPair = 'EURUSDT';
+      
+      if (prices[usdtPair] && prices[eurUsdtPair]) {
+        // Convert to USDT first, then to EUR
+        const valueInUSDT = totalBalance * prices[usdtPair];
+        totalEUR += valueInUSDT / prices[eurUsdtPair];
+        continue;
+      }
+      
+      // Try to convert via BTC
+      const btcPair = `${asset}BTC`;
+      const eurBtcPair = 'BTCEUR';
+      
+      if (prices[btcPair] && prices[eurBtcPair]) {
+        // Convert to BTC first, then to EUR
+        const valueInBTC = totalBalance * prices[btcPair];
+        totalEUR += valueInBTC * prices[eurBtcPair];
+        continue;
+      }
+      
+      // If asset is BTC, convert directly using BTCEUR
+      if (asset === 'BTC' && prices['BTCEUR']) {
+        totalEUR += totalBalance * prices['BTCEUR'];
+        continue;
+      }
+      
+      // If asset is USDT, convert using EURUSDT (inverted)
+      if (asset === 'USDT' && prices['EURUSDT']) {
+        totalEUR += totalBalance / prices['EURUSDT'];
+        continue;
+      }
+      
+      console.log(`Could not convert ${asset} to EUR - no conversion path found`);
+    }
+    
+    console.log(`\n${'='.repeat(44)}`);
+    console.log(`Total Balance: ${totalEUR.toFixed(2)} EUR`);
+    const timestamp = new Date().toISOString().replace('T', ' ').substring(0, 19);
+    console.log(`Timestamp: ${timestamp}`);
+    console.log(`${'='.repeat(44)}`);
+  } catch (error) {
+    console.error('Error calculating total in EUR:', error.message);
   }
 }
 
@@ -108,7 +198,7 @@ if (require.main === module) {
         console.log(`Can Deposit: ${account.canDeposit}`);
         
         // Display balances
-        displayBalances(account);
+        await displayBalances(account);
         
         // Save to file if requested
         if (process.argv.includes('--save')) {

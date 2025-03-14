@@ -1,0 +1,12 @@
+{
+  "cycle": 4,
+  "symbol": "BTCUSDT",
+  "timestamp": "2025-03-12T23:23:10.520Z",
+  "buyAmount": "10",
+  "profit": "0.001",
+  "buyPrice": "20000",
+  "quantity": 0.00021987,
+  "orderId": "243634570",
+  "sellPrice": "20004.55",
+  "status": "SIMULATED"
+}

@@ -1,0 +1,5 @@
+{
+  "timestamp": "2025-03-12T23:48:35.590Z",
+  "error": "Command failed with code 1: API Error: {\n  code: -2010,\n  msg: 'Account has insufficient balance for requested action.'\n}\nAn error occurred: Request failed with status code 400\n",
+  "stack": "Error: Command failed with code 1: API Error: {\n  code: -2010,\n  msg: 'Account has insufficient balance for requested action.'\n}\nAn error occurred: Request failed with status code 400\n\n    at ChildProcess.<anonymous> (/Users/bgbruno/Development/bg/market.bot/bg---market.bot--crypto---@2025.03.12@we@004.20---js.node---windsurf/trading-loop.js:89:16)\n    at ChildProcess.emit (node:events:507:28)\n    at maybeClose (node:internal/child_process:1101:16)\n    at ChildProcess._handle.onexit (node:internal/child_process:305:5)"
+}

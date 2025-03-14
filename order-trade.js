@@ -258,6 +258,7 @@ async function main() {
       console.log('  --takeProfitPercentage      Percentage profit target (e.g., 5 for 5% profit)');
       console.log('  --takeProfitExplicit        Explicit profit amount in quote currency (e.g., 50 for 50 USDT profit)');
       console.log('  --takeProfitSymbol         Symbol of the profit currency (default: USDT)');
+      console.log('  --dryRun                   Simulate order without actually placing it');
       console.log('\nAlternatively, you can use the app.js interface:');
       console.log('  node app.js order-trade --symbol BTCUSDT --side BUY --quantity 0.001 --price 50000');
       return;
@@ -361,16 +362,49 @@ async function main() {
       type: args.market ? 'MARKET' : (args.price ? 'LIMIT' : 'MARKET')
     };
     
-    // Create the order
-    console.log(`Creating ${orderParams.type} ${orderParams.side} order for ${orderParams.symbol}...`);
-    const order = await createOrder(orderParams);
-    
-    // Display order information
-    displayOrder(order);
-    
-    // Suggest monitoring the order
-    console.log('\nTo monitor this order, use:');
-    console.log(`node order_monitor.js --symbol ${args.symbol} --orderId ${order.orderId} --save`);
+    // Check if we're in dry run mode
+    if (args.dryRun) {
+      console.log(`[DRY RUN] Would create ${orderParams.type} ${orderParams.side} order for ${orderParams.symbol}...`);
+      
+      // Create a simulated order response
+      const simulatedOrder = {
+        symbol: orderParams.symbol,
+        orderId: Math.floor(Math.random() * 1000000000),
+        clientOrderId: `simulated_${Date.now()}`,
+        transactTime: Date.now(),
+        price: orderParams.price || 'MARKET',
+        origQty: orderParams.quantity,
+        executedQty: orderParams.quantity,
+        status: 'FILLED',
+        timeInForce: 'GTC',
+        type: orderParams.type,
+        side: orderParams.side,
+        fills: [{
+          price: orderParams.price || await getCurrentPrice(orderParams.symbol),
+          qty: orderParams.quantity,
+          commission: '0',
+          commissionAsset: 'BNB'
+        }]
+      };
+      
+      // Display simulated order information
+      console.log('\n[DRY RUN] Simulated order:');
+      displayOrder(simulatedOrder);
+      
+      // Return simulated order
+      return simulatedOrder;
+    } else {
+      // Create the actual order
+      console.log(`Creating ${orderParams.type} ${orderParams.side} order for ${orderParams.symbol}...`);
+      const order = await createOrder(orderParams);
+      
+      // Display order information
+      displayOrder(order);
+      
+      // Suggest monitoring the order
+      console.log('\nTo monitor this order, use:');
+      console.log(`node order_monitor.js --symbol ${args.symbol} --orderId ${order.orderId} --save`);
+    }
     
   } catch (error) {
     console.error('An error occurred:', error.message);

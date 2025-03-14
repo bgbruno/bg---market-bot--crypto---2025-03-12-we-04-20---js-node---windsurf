@@ -1,0 +1,806 @@
+{
+  "totalTrades": 99,
+  "successfulTrades": 92,
+  "failedTrades": 7,
+  "totalProfit": 2.2586874988999885,
+  "totalLoss": 0.0020650000000000004,
+  "netProfit": 2.2566224988999886,
+  "winRate": 92.92929292929293,
+  "startDate": "2025-03-12T20:22:32.158Z",
+  "lastTradeDate": "2025-03-13T00:41:00.444Z",
+  "symbol": "BTCUSDT",
+  "trades": [
+    {
+      "date": "2025-03-13T00:41:00.444Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "21000.00",
+      "quantity": 0.00000425,
+      "profit": "0.00425000"
+    },
+    {
+      "date": "2025-03-13T00:40:50.288Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "21000.00",
+      "quantity": 0.00000425,
+      "profit": "0.00425000"
+    },
+    {
+      "date": "2025-03-13T00:40:40.799Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "21000.00",
+      "quantity": 0.00000425,
+      "profit": "0.00425000"
+    },
+    {
+      "date": "2025-03-13T00:40:30.769Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "21000.00",
+      "quantity": 0.00000425,
+      "profit": "0.00425000"
+    },
+    {
+      "date": "2025-03-13T00:40:21.343Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "21000.00",
+      "quantity": 0.00000425,
+      "profit": "0.00425000"
+    },
+    {
+      "date": "2025-03-13T00:40:11.945Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "21000.00",
+      "quantity": 0.00000425,
+      "profit": "0.00425000"
+    },
+    {
+      "date": "2025-03-13T00:40:02.562Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "21000.00",
+      "quantity": 0.00000425,
+      "profit": "0.00425000"
+    },
+    {
+      "date": "2025-03-13T00:39:53.147Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "21000.00",
+      "quantity": 0.00000425,
+      "profit": "0.00425000"
+    },
+    {
+      "date": "2025-03-13T00:39:43.756Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "21000.00",
+      "quantity": 0.00000425,
+      "profit": "0.00425000"
+    },
+    {
+      "date": "2025-03-13T00:39:33.103Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "21000.00",
+      "quantity": 0.00000425,
+      "profit": "0.00425000"
+    },
+    {
+      "date": "2025-03-13T00:39:23.557Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "21000.00",
+      "quantity": 0.00000425,
+      "profit": "0.00425000"
+    },
+    {
+      "date": "2025-03-13T00:39:12.740Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "21000.00",
+      "quantity": 0.00000425,
+      "profit": "0.00425000"
+    },
+    {
+      "date": "2025-03-13T00:39:03.326Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "21000.00",
+      "quantity": 0.00000425,
+      "profit": "0.00425000"
+    },
+    {
+      "date": "2025-03-13T00:38:53.873Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "21000.00",
+      "quantity": 0.00000425,
+      "profit": "0.00425000"
+    },
+    {
+      "date": "2025-03-13T00:38:44.413Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "21000.00",
+      "quantity": 0.00000425,
+      "profit": "0.00425000"
+    },
+    {
+      "date": "2025-03-13T00:38:34.959Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "21000.00",
+      "quantity": 0.00000425,
+      "profit": "0.00425000"
+    },
+    {
+      "date": "2025-03-13T00:38:25.441Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "21000.00",
+      "quantity": 0.00000425,
+      "profit": "0.00425000"
+    },
+    {
+      "date": "2025-03-13T00:38:15.903Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "21000.00",
+      "quantity": 0.00000425,
+      "profit": "0.00425000"
+    },
+    {
+      "date": "2025-03-13T00:38:06.431Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "21000.00",
+      "quantity": 0.00000425,
+      "profit": "0.00425000"
+    },
+    {
+      "date": "2025-03-13T00:34:12.454Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "21000.00",
+      "quantity": 0.00000425,
+      "profit": "0.00425000"
+    },
+    {
+      "date": "2025-03-13T00:33:10.736Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "21000.00",
+      "quantity": 0.00000425,
+      "profit": "0.00425000"
+    },
+    {
+      "date": "2025-03-13T00:32:34.350Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "137804.86",
+      "quantity": 0.00000425,
+      "profit": "0.50067065"
+    },
+    {
+      "date": "2025-03-13T00:31:54.925Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "20060.00",
+      "quantity": 0.00075425,
+      "profit": "0.04525500"
+    },
+    {
+      "date": "2025-03-13T00:30:26.268Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "20703.61",
+      "quantity": 0.00075425,
+      "profit": "0.53069784"
+    },
+    {
+      "date": "2025-03-13T00:28:01.027Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83872.75000000",
+      "sellPrice": "84949.59",
+      "quantity": "0.00011",
+      "profit": "0.11845240"
+    },
+    {
+      "date": "2025-03-13T00:27:38.984Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83872.58000000",
+      "sellPrice": "84949.42",
+      "quantity": "0.00011",
+      "profit": "0.11845240"
+    },
+    {
+      "date": "2025-03-13T00:27:27.637Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83923.01000000",
+      "sellPrice": "84999.95",
+      "quantity": "0.00011",
+      "profit": "0.11846340"
+    },
+    {
+      "date": "2025-03-13T00:27:16.706Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83944.74000000",
+      "sellPrice": "85021.72",
+      "quantity": "0.00011",
+      "profit": "0.11846780"
+    },
+    {
+      "date": "2025-03-13T00:26:54.597Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83913.98000000",
+      "sellPrice": "84990.90",
+      "quantity": "0.00011",
+      "profit": "0.11846120"
+    },
+    {
+      "date": "2025-03-13T00:25:59.308Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83901.14000000",
+      "sellPrice": "84978.03",
+      "quantity": "0.00011",
+      "profit": "0.11845790"
+    },
+    {
+      "date": "2025-03-13T00:24:56.588Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "21093.63",
+      "quantity": 0.00009491,
+      "profit": "0.10379642"
+    },
+    {
+      "date": "2025-03-13T00:23:41.809Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "21093.63",
+      "quantity": 0.00009491,
+      "profit": "0.10379642"
+    },
+    {
+      "date": "2025-03-13T00:04:17.351Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "20137.79",
+      "quantity": 0.00072572,
+      "profit": "0.09999696"
+    },
+    {
+      "date": "2025-03-13T00:04:09.156Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83758.51000000",
+      "sellPrice": "83849.42",
+      "quantity": "0.00011",
+      "profit": "0.01000010"
+    },
+    {
+      "date": "2025-03-13T00:03:42.144Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83768.16000000",
+      "sellPrice": "83777.25",
+      "quantity": "0.00011",
+      "profit": "0.00099990"
+    },
+    {
+      "date": "2025-03-13T00:03:35.736Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83770.63000000",
+      "sellPrice": "83861.54",
+      "quantity": "0.00011",
+      "profit": "0.01000010"
+    },
+    {
+      "date": "2025-03-13T00:03:31.361Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83772.84000000",
+      "sellPrice": "83781.93",
+      "quantity": "0.00011",
+      "profit": "0.00099990"
+    },
+    {
+      "date": "2025-03-13T00:02:17.576Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83610.36000000",
+      "sellPrice": "83619.45",
+      "quantity": "0.00011",
+      "profit": "0.00099990"
+    },
+    {
+      "date": "2025-03-13T00:01:56.695Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83636.63000000",
+      "sellPrice": "83645.72",
+      "quantity": "0.00011",
+      "profit": "0.00099990"
+    },
+    {
+      "date": "2025-03-13T00:01:45.468Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83629.01000000",
+      "sellPrice": "83638.10",
+      "quantity": "0.00011",
+      "profit": "0.00099990"
+    },
+    {
+      "date": "2025-03-13T00:00:52.009Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83690.01000000",
+      "sellPrice": "83699.10",
+      "quantity": "0.00011",
+      "profit": "0.00099990"
+    },
+    {
+      "date": "2025-03-13T00:00:17.638Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83676.20000000",
+      "sellPrice": "83685.29",
+      "quantity": "0.00011",
+      "profit": "0.00099990"
+    },
+    {
+      "date": "2025-03-12T23:59:56.227Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83669.43000000",
+      "sellPrice": "83678.52",
+      "quantity": "0.00011",
+      "profit": "0.00099990"
+    },
+    {
+      "date": "2025-03-12T23:59:35.323Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83638.80000000",
+      "sellPrice": "83647.89",
+      "quantity": "0.00011",
+      "profit": "0.00099990"
+    },
+    {
+      "date": "2025-03-12T23:52:51.099Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83784.01000000",
+      "sellPrice": "83793.10",
+      "quantity": "0.00011",
+      "profit": "0.00099990"
+    },
+    {
+      "date": "2025-03-12T23:50:34.577Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "20001.70",
+      "quantity": 0.00058748,
+      "profit": "0.00099872"
+    },
+    {
+      "date": "2025-03-12T23:48:29.532Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83709.67000000",
+      "sellPrice": "83718.76",
+      "quantity": 0.00012,
+      "profit": "0.00109080"
+    },
+    {
+      "date": "2025-03-12T23:48:09.251Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83694.06000000",
+      "sellPrice": "83703.15",
+      "quantity": 0.00012,
+      "profit": "0.00109080"
+    },
+    {
+      "date": "2025-03-12T23:48:02.491Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83694.06000000",
+      "sellPrice": "83703.15",
+      "quantity": 0.00013,
+      "profit": "0.00118170"
+    },
+    {
+      "date": "2025-03-12T23:47:27.402Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83656.18000000",
+      "sellPrice": "83665.27",
+      "quantity": 0.00012,
+      "profit": "0.00109080"
+    },
+    {
+      "date": "2025-03-12T23:47:26.537Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83662.42000000",
+      "sellPrice": "83671.51",
+      "quantity": 0.00013,
+      "profit": "0.00118170"
+    },
+    {
+      "date": "2025-03-12T23:46:57.023Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83658.58000000",
+      "sellPrice": "83667.67",
+      "quantity": 0.00012,
+      "profit": "0.00109080"
+    },
+    {
+      "date": "2025-03-12T23:46:47.849Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83662.42000000",
+      "sellPrice": "83671.51",
+      "quantity": 0.00012,
+      "profit": "0.00109080"
+    },
+    {
+      "date": "2025-03-12T23:46:27.593Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83689.05000000",
+      "sellPrice": "83698.14",
+      "quantity": 0.00012,
+      "profit": "0.00109080"
+    },
+    {
+      "date": "2025-03-12T23:46:17.689Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83702.20000000",
+      "sellPrice": "83711.29",
+      "quantity": 0.00012,
+      "profit": "0.00109080"
+    },
+    {
+      "date": "2025-03-12T23:44:31.027Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "20001.21",
+      "quantity": 0.00082869,
+      "profit": "0.00100271"
+    },
+    {
+      "date": "2025-03-12T23:32:36.833Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83467.52000000",
+      "sellPrice": "83476.61",
+      "quantity": 0.00012,
+      "profit": "0.00109080"
+    },
+    {
+      "date": "2025-03-12T23:32:17.639Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83447.34000000",
+      "sellPrice": "83456.43",
+      "quantity": 0.00012,
+      "profit": "0.00109080"
+    },
+    {
+      "date": "2025-03-12T23:29:44.695Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "20008.35",
+      "quantity": 0.00011976,
+      "profit": "0.00100000"
+    },
+    {
+      "date": "2025-03-12T23:29:37.709Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "20008.35",
+      "quantity": 0.00011976,
+      "profit": "0.00100000"
+    },
+    {
+      "date": "2025-03-12T23:29:30.710Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "20008.35",
+      "quantity": 0.00011976,
+      "profit": "0.00100000"
+    },
+    {
+      "date": "2025-03-12T23:29:22.802Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "20008.35",
+      "quantity": 0.00011976,
+      "profit": "0.00100000"
+    },
+    {
+      "date": "2025-03-12T23:25:40.384Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "20001.23",
+      "quantity": 0.00080987,
+      "profit": "0.00099614"
+    },
+    {
+      "date": "2025-03-12T23:24:39.685Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "20004.55",
+      "quantity": 0.00021987,
+      "profit": "0.00100041"
+    },
+    {
+      "date": "2025-03-12T23:24:31.582Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "20004.55",
+      "quantity": 0.00021987,
+      "profit": "0.00100041"
+    },
+    {
+      "date": "2025-03-12T23:24:24.559Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "20004.55",
+      "quantity": 0.00021987,
+      "profit": "0.00100041"
+    },
+    {
+      "date": "2025-03-12T23:24:17.517Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "20004.55",
+      "quantity": 0.00021987,
+      "profit": "0.00100041"
+    },
+    {
+      "date": "2025-03-12T23:24:10.422Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "20004.55",
+      "quantity": 0.00021987,
+      "profit": "0.00100041"
+    },
+    {
+      "date": "2025-03-12T23:24:03.419Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "20004.55",
+      "quantity": 0.00021987,
+      "profit": "0.00100041"
+    },
+    {
+      "date": "2025-03-12T23:23:56.419Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "20004.55",
+      "quantity": 0.00021987,
+      "profit": "0.00100041"
+    },
+    {
+      "date": "2025-03-12T23:23:19.743Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "20004.55",
+      "quantity": 0.00021987,
+      "profit": "0.00100041"
+    },
+    {
+      "date": "2025-03-12T23:23:12.716Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "20004.55",
+      "quantity": 0.00021987,
+      "profit": "0.00100041"
+    },
+    {
+      "date": "2025-03-12T23:23:05.519Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "20004.55",
+      "quantity": 0.00021987,
+      "profit": "0.00100041"
+    },
+    {
+      "date": "2025-03-12T23:22:58.221Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "20004.55",
+      "quantity": 0.00021987,
+      "profit": "0.00100041"
+    },
+    {
+      "date": "2025-03-12T23:22:51.109Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "20004.55",
+      "quantity": 0.00021987,
+      "profit": "0.00100041"
+    },
+    {
+      "date": "2025-03-12T23:11:05.817Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83633.31000000",
+      "sellPrice": "83724.22",
+      "quantity": "0.00011",
+      "profit": "0.01000010"
+    },
+    {
+      "date": "2025-03-12T23:10:32.287Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83693.00000000",
+      "sellPrice": "83702.09",
+      "quantity": "0.00011",
+      "profit": "0.00099990"
+    },
+    {
+      "date": "2025-03-12T22:54:58.834Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83678.19000000",
+      "sellPrice": "83687.28",
+      "quantity": "0.00011",
+      "profit": "0.00099990"
+    },
+    {
+      "date": "2025-03-12T22:54:27.130Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83641.06000000",
+      "sellPrice": "83650.15",
+      "quantity": "0.00011",
+      "profit": "0.00099990"
+    },
+    {
+      "date": "2025-03-12T22:43:01.765Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83649.08000000",
+      "sellPrice": "83648.58",
+      "quantity": "0.00059",
+      "profit": "-0.00029500"
+    },
+    {
+      "date": "2025-03-12T22:42:54.522Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83632.08000000",
+      "sellPrice": "83631.58",
+      "quantity": "0.00059",
+      "profit": "-0.00029500"
+    },
+    {
+      "date": "2025-03-12T22:42:47.281Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83614.66000000",
+      "sellPrice": "83614.16",
+      "quantity": "0.00059",
+      "profit": "-0.00029500"
+    },
+    {
+      "date": "2025-03-12T22:41:54.247Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83637.69000000",
+      "sellPrice": "83637.19",
+      "quantity": "0.00059",
+      "profit": "-0.00029500"
+    },
+    {
+      "date": "2025-03-12T22:33:03.958Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83533.83000000",
+      "sellPrice": "83533.93",
+      "quantity": "0.00011",
+      "profit": "0.00001100"
+    },
+    {
+      "date": "2025-03-12T22:32:50.916Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83537.74000000",
+      "sellPrice": "83537.84",
+      "quantity": "0.00011",
+      "profit": "0.00001100"
+    },
+    {
+      "date": "2025-03-12T22:29:29.182Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83524.39000000",
+      "sellPrice": "83523.89",
+      "quantity": "0.00059",
+      "profit": "-0.00029500"
+    },
+    {
+      "date": "2025-03-12T22:29:25.443Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83506.50000000",
+      "sellPrice": "83506.60",
+      "quantity": "0.00011",
+      "profit": "0.00001100"
+    },
+    {
+      "date": "2025-03-12T22:29:21.874Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83474.56000000",
+      "sellPrice": "83474.06",
+      "quantity": "0.00059",
+      "profit": "-0.00029500"
+    },
+    {
+      "date": "2025-03-12T22:29:14.745Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83482.01000000",
+      "sellPrice": "83481.51",
+      "quantity": "0.00059",
+      "profit": "-0.00029500"
+    },
+    {
+      "date": "2025-03-12T22:28:55.679Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83501.57000000",
+      "sellPrice": "83501.67",
+      "quantity": "0.00011",
+      "profit": "0.00001100"
+    },
+    {
+      "date": "2025-03-12T22:27:49.043Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "20000",
+      "sellPrice": "20000.10",
+      "quantity": 0.00072639,
+      "profit": "0.00007264"
+    },
+    {
+      "date": "2025-03-12T22:13:21.117Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83332.00000000",
+      "sellPrice": "83332.20",
+      "quantity": "0.00012",
+      "profit": "0.00002400"
+    },
+    {
+      "date": "2025-03-12T22:11:06.784Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83323.57000000",
+      "sellPrice": "83323.77",
+      "quantity": "0.00012",
+      "profit": "0.00002400"
+    },
+    {
+      "date": "2025-03-12T22:11:06.248Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83311.03000000",
+      "sellPrice": "83311.43",
+      "quantity": "0.00012",
+      "profit": "0.00004800"
+    },
+    {
+      "date": "2025-03-12T22:10:10.017Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83286.15000000",
+      "sellPrice": "83286.55",
+      "quantity": "0.00012",
+      "profit": "0.00004800"
+    },
+    {
+      "date": "2025-03-12T22:09:23.792Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83300.00000000",
+      "sellPrice": "83300.10",
+      "quantity": "0.00012",
+      "profit": "0.00001200"
+    },
+    {
+      "date": "2025-03-12T22:09:05.393Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "83264.06000000",
+      "sellPrice": "83264.16",
+      "quantity": "0.00012",
+      "profit": "0.00001200"
+    },
+    {
+      "date": "2025-03-12T20:22:40.984Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "82840.00000000",
+      "sellPrice": "82840.01",
+      "quantity": "0.00012",
+      "profit": "0.00000120"
+    },
+    {
+      "date": "2025-03-12T20:22:32.158Z",
+      "symbol": "BTCUSDT",
+      "buyPrice": "82830.19000000",
+      "sellPrice": "82830.20",
+      "quantity": "0.00012",
+      "profit": "0.00000120"
+    }
+  ]
+}

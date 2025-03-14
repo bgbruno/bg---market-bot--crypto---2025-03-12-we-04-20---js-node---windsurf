@@ -373,6 +373,7 @@ Automatizovaný obchodný cyklus, ktorý nakupuje a predáva kryptomenu s cieľo
 ```
 node trading-loop.js --symbol BTCUSDT --buyAmount 10 --profit 0.01 --cycles 3
 node trading-loop.js --symbol ETHUSDT --buyAmount 10 --profitPercent 0.5 --stopLoss 5 --cycles 1 --dryRun
+node trading-loop.js --symbol BTCUSDT --buyAmount 10 --profit 0.01 --priceDropThresholdPercentage 1.5
 node trading-loop.js --config config.json
 node trading-loop.js --symbol BTCUSDT --buyAmount 10 --profit 0.01 --saveConfig config.json
 ```
@@ -386,6 +387,8 @@ node trading-loop.js --symbol BTCUSDT --buyAmount 10 --profit 0.01 --saveConfig 
 - `--stopLossPercent` - Alternatívne môžete zadať stop-loss ako percentuálnu hodnotu
 - `--trailingStop` - Aktivuje trailing stop-loss (predvolene false)
 - `--trailingPercent` - Vzdialenosť trailing stopu ako percento (predvolene 0.5%)
+- `--priceDropThreshold` - Absolútny pokles ceny na aktiváciu zrušenia objednávky (predvolene 0)
+- `--priceDropThresholdPercentage` - Percentuálny pokles z najvyššej ceny na aktiváciu zrušenia objednávky (predvolene 1.0%)
 - `--cycles` - Počet obchodných cyklov (predvolene nekonečno)
 - `--delay` - Oneskorenie medzi cyklami v sekundách (predvolene 5)
 - `--skipBalanceCheck` - Preskočí kontrolu zostatku pred obchodovaním (predvolene false)
@@ -399,7 +402,8 @@ node trading-loop.js --symbol BTCUSDT --buyAmount 10 --profit 0.01 --saveConfig 
 - Automatické použitie existujúceho zostatku kryptomeny, ak je dostupný
 - Presný výpočet cieľovej ceny predaja pre požadovaný zisk
 - Podpora pre stop-loss a trailing stop-loss pre riadenie rizika
-- Monitorovanie predajnej objednávky až do jej vyplnenia
+- Monitorovanie predajnej objednávky až do jej vyplnenia s detekciou poklesu ceny
+- Automatické zrušenie a vytvorenie novej objednávky pri prekročení prahu poklesu ceny
 - Detailné záznamy o každom obchodnom cykle v adresári `history`
 - Ukladanie kumulatívnych obchodných štatistík s časovou značkou
 - Možnosť simulácie obchodovania v režime "dry run"

@@ -1,0 +1,5 @@
+{
+  "timestamp": "2025-03-12T23:13:22.312Z",
+  "error": "Cannot access 'roundedQuantity' before initialization",
+  "stack": "ReferenceError: Cannot access 'roundedQuantity' before initialization\n    at tradingLoop (/Users/bgbruno/Development/bg/market.bot/bg---market.bot--crypto---@2025.03.12@we@004.20---js.node---windsurf/trading-loop.js:626:25)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)"
+}

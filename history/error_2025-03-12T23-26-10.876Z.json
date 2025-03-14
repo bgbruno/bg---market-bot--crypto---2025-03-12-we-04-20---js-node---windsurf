@@ -1,0 +1,5 @@
+{
+  "timestamp": "2025-03-12T23:26:10.875Z",
+  "error": "Insufficient BTC balance to meet minimum order requirements",
+  "stack": "Error: Insufficient BTC balance to meet minimum order requirements\n    at tradingLoop (/Users/bgbruno/Development/bg/market.bot/bg---market.bot--crypto---@2025.03.12@we@004.20---js.node---windsurf/trading-loop.js:766:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)"
+}

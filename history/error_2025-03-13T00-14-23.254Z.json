@@ -1,0 +1,5 @@
+{
+  "timestamp": "2025-03-13T00:14:23.250Z",
+  "error": "Assignment to constant variable.",
+  "stack": "TypeError: Assignment to constant variable.\n    at tradingLoop (/Users/bgbruno/Development/bg/market.bot/bg---market.bot--crypto---@2025.03.12@we@004.20---js.node---windsurf/trading-loop.js:508:17)\n    at Object.<anonymous> (/Users/bgbruno/Development/bg/market.bot/bg---market.bot--crypto---@2025.03.12@we@004.20---js.node---windsurf/trading-loop.js:1225:1)\n    at Module._compile (node:internal/modules/cjs/loader:1734:14)\n    at Object..js (node:internal/modules/cjs/loader:1899:10)\n    at Module.load (node:internal/modules/cjs/loader:1469:32)\n    at Function._load (node:internal/modules/cjs/loader:1286:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)\n    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:151:5)\n    at node:internal/main/run_main_module:33:47"
+}

@@ -1,0 +1,5 @@
+{
+  "timestamp": "2025-03-12T23:51:56.225Z",
+  "error": "startTradingCycle is not defined",
+  "stack": "ReferenceError: startTradingCycle is not defined\n    at tradingLoop (/Users/bgbruno/Development/bg/market.bot/bg---market.bot--crypto---@2025.03.12@we@004.20---js.node---windsurf/trading-loop.js:820:11)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)"
+}

@@ -1,0 +1,5 @@
+{
+  "timestamp": "2025-03-13T00:16:21.268Z",
+  "error": "adjustedQuantity is not defined",
+  "stack": "ReferenceError: adjustedQuantity is not defined\n    at tradingLoop (/Users/bgbruno/Development/bg/market.bot/bg---market.bot--crypto---@2025.03.12@we@004.20---js.node---windsurf/trading-loop.js:892:13)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)"
+}

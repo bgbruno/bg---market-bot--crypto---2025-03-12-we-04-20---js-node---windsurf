@@ -1,0 +1,5 @@
+{
+  "timestamp": "2025-03-13T00:14:04.176Z",
+  "error": "Insufficient balance for trading. Not enough BTC or USDT.",
+  "stack": "Error: Insufficient balance for trading. Not enough BTC or USDT.\n    at tradingLoop (/Users/bgbruno/Development/bg/market.bot/bg---market.bot--crypto---@2025.03.12@we@004.20---js.node---windsurf/trading-loop.js:650:19)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)"
+}
