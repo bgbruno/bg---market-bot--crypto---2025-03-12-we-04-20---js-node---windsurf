@@ -1,3 +1,4 @@
 chat/** filter=lfs diff=lfs merge=lfs -text
 data/** filter=lfs diff=lfs merge=lfs -text
 history/** filter=lfs diff=lfs merge=lfs -text
+orders/** filter=lfs diff=lfs merge=lfs -text
